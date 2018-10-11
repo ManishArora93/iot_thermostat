@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  thermostat_token: MyString
+  location: MyString
+
+two:
+  thermostat_token: MyString
+  location: MyString

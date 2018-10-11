@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  references: 
+  temperature: 1
+  battery_charge: 1
+  humidity: 1
+
+two:
+  references: 
+  temperature: 1
+  battery_charge: 1
+  humidity: 1
