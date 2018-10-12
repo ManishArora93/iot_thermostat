@@ -36,7 +36,6 @@ module API
           end
 
           def authenticate_thermostat(thermostat_token)
-            p "thermostat_token #{thermostat_token}"
             thermostat = Thermostat.where(thermostat_token: thermostat_token).first
             if thermostat.present?
               return thermostat.id 
@@ -46,7 +45,14 @@ module API
           end
 
           def generate_next_number_in_sequence
-            last_number = Reading.last.present? ? Reading.last.reading_id + 1 : 1
+            redis_reading_id_keys = $redis.keys.select {|key| key.starts_with? ("reading_id")}
+            if redis_reading_id_keys.present?
+              max_id = redis_reading_id_keys.map {|e| e.split("_").last.to_i}.max
+            else
+              max_id = 0
+            end
+            max_record_id = Reading.last.present? ? Reading.last.reading_id  : 0
+            return max_record_id >= max_id ? max_record_id + 1 : max_id + 1
           end
 
           def clean_params(params)
