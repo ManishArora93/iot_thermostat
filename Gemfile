@@ -41,6 +41,15 @@ gem 'grape-active_model_serializers'
 # To make API calls from Console
 gem 'httparty'
 
+# Cache Store
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
+
+# Scheduling Jobs
+gem 'whenever', require: false
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
