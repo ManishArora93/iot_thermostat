@@ -203,6 +203,8 @@ GEM
       redis-store (>= 1.2, < 2)
     redis-store (1.6.0)
       redis (>= 2.2, < 5)
+    redis_master_slave (0.0.1)
+      redis
     rubyzip (1.2.2)
     sass (3.6.0)
       sass-listen (~> 4.0.0)
@@ -279,6 +281,7 @@ DEPENDENCIES
   redis-namespace
   redis-rack-cache
   redis-rails
+  redis_master_slave
   sass-rails (~> 5.0)
   selenium-webdriver
   turbolinks (~> 5)
