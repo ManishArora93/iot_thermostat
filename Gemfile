@@ -46,6 +46,7 @@ gem 'redis'
 gem 'redis-namespace'
 gem 'redis-rails'
 gem 'redis-rack-cache'
+gem 'redis-dump', '~> 0.4'
 
 # Scheduling Jobs
 gem 'whenever', require: false
