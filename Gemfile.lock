@@ -95,6 +95,11 @@ GEM
     equalizer (0.0.11)
     erubi (1.7.1)
     execjs (2.7.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
     ffi (1.9.25-x64-mingw32)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -110,7 +115,7 @@ GEM
       grape (>= 0.8.0)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
-    i18n (1.1.0)
+    i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     io-like (0.3.0)
@@ -121,7 +126,7 @@ GEM
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.0)
+    mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
@@ -206,10 +211,6 @@ GEM
       redis (>= 2.2, < 5)
     redis_master_slave (0.0.1)
       redis
-    rspec (3.8.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.2)
@@ -217,6 +218,14 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-rails (3.8.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.8.0)
+      rspec-expectations (~> 3.8.0)
+      rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     rubyzip (1.2.2)
@@ -283,6 +292,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   duktape
+  factory_bot_rails
   grape
   grape-active_model_serializers
   httparty
@@ -296,7 +306,7 @@ DEPENDENCIES
   redis-rack-cache
   redis-rails
   redis_master_slave
-  rspec
+  rspec-rails (~> 3.0)
   sass-rails (~> 5.0)
   selenium-webdriver
   turbolinks (~> 5)
