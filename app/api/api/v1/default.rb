@@ -17,7 +17,7 @@ module API
             Rails.logger
           end
 
-          def error_response(status, message)
+          def throw_error(status, message)
             error!(status: status, message: message)
           end
 
@@ -26,19 +26,23 @@ module API
             if thermostat.present?
               return thermostat.id 
             else
-              error_response(401, 'Unauthorized. Invalid or expired thermostat token.')
+              throw_error(401, 'Unauthorized. Invalid or expired thermostat token.')
             end
           end
 
           def generate_next_number_in_sequence(thermostat_id)
-            thermostat_data = $redis.get("thermostat_id_#{thermostat_id}_stats")
-            if thermostat_data.present?
-              max_id = JSON.parse(thermostat_data)['counter']
-            else
-              max_id = 0
+            begin
+              thermostat_data = $redis.get("thermostat_id_#{thermostat_id}_stats")
+              if thermostat_data.present?
+                max_id = JSON.parse(thermostat_data)['counter']
+              else
+                max_id = 0
+              end
+              max_record_id = Reading.where(thermostat_id: thermostat_id).present? ? Reading.where(thermostat_id: thermostat_id).last.reading_id  : 0
+              return max_record_id >= max_id ? max_record_id + 1 : max_id + 1
+            rescue
+              throw_error(503, 'Service not Available')
             end
-            max_record_id = Reading.where(thermostat_id: thermostat_id).present? ? Reading.where(thermostat_id: thermostat_id).last.reading_id  : 0
-            return max_record_id >= max_id ? max_record_id + 1 : max_id + 1
           end
 
           def calculate_thermostat_stats(thermostat_id, temperature, humidity, battery_charge)
@@ -72,11 +76,11 @@ module API
         end
 
         rescue_from ActiveRecord::RecordNotFound do |e|
-          error_response(404, e.message)
+          throw_error(404, e.message)
         end
 
         rescue_from ActiveRecord::RecordInvalid do |e|
-          error_response(422, e.message)
+          throw_error(422, e.message)
         end
       end
     end
