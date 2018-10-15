@@ -52,6 +52,9 @@ gem 'redis_master_slave'
 # Scheduling Jobs
 gem 'whenever', require: false
 
+# Behaviour Testing
+gem 'rspec'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

@@ -9,14 +9,14 @@ module API
           begin
 	          redis_response = $redis.get("reading_id_#{params[:id]}_#{thermostat_id}")
 	        rescue
-	        	error!(status: "503", message: 'Service not Available')
+	        	error_response(503, 'Service not Available')
 	        end
 					if redis_response.present?
 						reading = JSON.parse(redis_response)
 					else           
 						reading = Reading.where(reading_id: params[:id], thermostat_id: thermostat_id).first!
 					end
-					{status: "200", reading: reading}
+					{status: 200, reading: reading}
 				end
         
         desc "Saving Readings for a thermostat and saving statistics"
@@ -35,15 +35,15 @@ module API
 							begin
 								$redis.set("reading_id_#{reading_id}_#{thermostat_id}", params.to_json)
 	              calculate_thermostat_stats(thermostat_id, params[:temperature], params[:humidity], params[:battery_charge] )
-							  data = {status: "200", reading_id: reading_id} # Saved OK
+							  data = {status: 200, reading_id: reading_id} # Saved OK
 							rescue
-								error!(status: "503", message: 'Service not Available')
+								error_response(503, 'Service not Available')
 							end
 						else
-							error!(status: "400", message: 'Bad Request - Data Inappropriate')
+							error_response(400, 'Bad Request - Data Inappropriate')
 						end
 					else
-						error!(status: "400", message: 'Bad Request - Data Missing')
+						error_response(400, 'Bad Request - Missing Params')
 					end
 				end
 			end
@@ -54,14 +54,14 @@ module API
 			  	begin
 				  	stat_data = $redis.get("thermostat_id_#{thermostat_id}_stats")
 				  rescue
-				  	error!(status: "503", message: 'Service not Available')
+				  	error_response(503, 'Service not Available')
 				  end
 			  	if stat_data.present?
 				    stats = JSON.parse(stat_data)
 				    stats.delete('counter')
-				    {status: "200", stats: stats}
+				    {status: 200, stats: stats}
 				  else
-				  	error!(status: "404", message: 'No Data Present for thermostat #{params[:id]}')
+				  	error_response(404, "No Data Present for thermostat #{params[:id]}")
 				  end
 			  end
 			end

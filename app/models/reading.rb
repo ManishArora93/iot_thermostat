@@ -1,4 +1,6 @@
 class Reading < ApplicationRecord
 	belongs_to :thermostat
-	validates :reading_id, presence: true
+	["reading_id", "thermostat_id", "temperature", "battery_charge", "humidity"].each do |attribute|
+    validates attribute.to_sym, presence: true
+  end
 end

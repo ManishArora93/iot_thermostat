@@ -17,12 +17,16 @@ module API
             Rails.logger
           end
 
+          def error_response(status, message)
+            error!(status: status, message: message)
+          end
+
           def authenticate_thermostat(thermostat_token)
             thermostat = Thermostat.where(thermostat_token: thermostat_token).first
             if thermostat.present?
               return thermostat.id 
             else
-              error!(status: "401", message: 'Unauthorized. Invalid or expired thermostat token.')
+              error_response(401, 'Unauthorized. Invalid or expired thermostat token.')
             end
           end
 
@@ -68,11 +72,11 @@ module API
         end
 
         rescue_from ActiveRecord::RecordNotFound do |e|
-          error!(status: "404", message: e.message)
+          error_response(404, e.message)
         end
 
         rescue_from ActiveRecord::RecordInvalid do |e|
-          error!(status: "422", message: e.message)
+          error_response(422, e.message)
         end
       end
     end
