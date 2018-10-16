@@ -21,6 +21,7 @@ module API
             error!(status: status, message: message)
           end
 
+          # Authenticate the token sent in headers
           def authenticate_thermostat(thermostat_token)
             thermostat = Thermostat.where(thermostat_token: thermostat_token).first
             if thermostat.present?
@@ -29,7 +30,8 @@ module API
               throw_error(401, 'Unauthorized. Invalid or expired thermostat token.')
             end
           end
-
+          
+          # Generate reading_id sequence for each thermostat
           def generate_next_number_in_sequence(thermostat_id)
             begin
               thermostat_data = $redis.get("thermostat_id_#{thermostat_id}_stats")
@@ -44,7 +46,8 @@ module API
               throw_error(503, 'Service not Available')
             end
           end
-
+          
+          # Method to calculate statistics for a particular thermostat
           def calculate_thermostat_stats(thermostat_id, temperature, humidity, battery_charge)
             thermostat_data = $redis.get("thermostat_id_#{thermostat_id}_stats")
             if thermostat_data.present?
