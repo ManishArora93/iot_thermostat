@@ -18,6 +18,6 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 15.minutes do
+every 30.minutes do
   rake "cron_tasks:save_readings_from_redis"
 end

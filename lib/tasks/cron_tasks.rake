@@ -17,6 +17,8 @@ namespace :cron_tasks do
           failed_readings["#{params["reading_id"]}_#{params["thermostat_id"]}"] << e.message
         end
       end
+    else
+      puts "No record present in redis to save"
     end
   end
 end
