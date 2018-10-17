@@ -40,8 +40,8 @@ module API
               else
                 max_id = 0
               end
-              max_record_id = Reading.where(thermostat_id: thermostat_id).present? ? Reading.where(thermostat_id: thermostat_id).last.reading_id  : 0
-              return max_record_id >= max_id ? max_record_id + 1 : max_id + 1
+              #max_record_id = Reading.where(thermostat_id: thermostat_id).present? ? Reading.where(thermostat_id: thermostat_id).last.reading_id  : 0
+              return max_id + 1
             rescue
               throw_error(503, 'Service not Available')
             end

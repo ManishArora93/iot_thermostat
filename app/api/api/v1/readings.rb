@@ -42,7 +42,7 @@ module API
 							$redis.set("reading_id_#{reading_id}_#{thermostat_id}", params.to_json)
               # Calculate the statistics for particular thermostat
               calculate_thermostat_stats(thermostat_id, params[:temperature], params[:humidity], params[:battery_charge] )
-						  data = {reading_id: reading_id} # Saved OK
+						  {reading_id: reading_id} # Saved OK
 						else
 							throw_error(400, 'Bad Request - Missing Params')
 						end
